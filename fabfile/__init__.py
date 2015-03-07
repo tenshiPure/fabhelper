@@ -8,3 +8,4 @@ env.password = 'vagrant'
 
 import result
 import yum
+import service
