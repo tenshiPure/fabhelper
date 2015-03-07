@@ -1,4 +1,4 @@
-from fabric.api import run, sudo, hide
+from fabric.api import sudo, hide
 
 from result import ok
 
