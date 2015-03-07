@@ -11,3 +11,4 @@ import yum
 import service
 import file
 import date
+import git
