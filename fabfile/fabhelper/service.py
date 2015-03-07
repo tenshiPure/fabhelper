@@ -2,6 +2,27 @@ from fabric.api import run, sudo, hide
 
 from result import ok
 
+def stop(target):
+	if type(target) is str:
+		__stop(target)
+	else:
+		[__stop(service) for service in target]
+
+
+def __stop(service):
+	if __isRunning(service):
+		with hide('everything'):
+			sudo('service %s stop' % service)
+		ok('echo stop %s' % service)
+	else:
+		ok('echo %s is already stopped' % service)
+
+
+def __isRunning(service):
+	with hide('everything'):
+		return 'running' in sudo('service %s status; true' % service)
+
+
 def off(target):
 	if type(target) is str:
 		__off(target)
