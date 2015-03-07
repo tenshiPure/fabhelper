@@ -2,6 +2,15 @@ from fabric.api import run, sudo, hide
 
 from result import ok
 
+def to_disabled(target):
+	if type(target) is str:
+		__stop(target)
+		__off(target)
+	else:
+		[__stop(service) for service in target]
+		[__off(service) for service in target]
+
+
 def stop(target):
 	if type(target) is str:
 		__stop(target)

@@ -6,6 +6,7 @@ from fabhelper import yum
 def install_package():
 	yum.install('wget')
 
+
 @task
 def install_packages():
 	yum.install(['wget', 'tree'])
