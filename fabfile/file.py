@@ -22,3 +22,8 @@ def conf():
 def __sed_with_conf(path):
 	file.sed(path, 'hoge', 'aaaaa')
 	file.sed(path, 'fuga', 'bbbbb')
+
+
+@task
+def link():
+	file.link('/tmp/sample.txt', '/tmp/sample.txtlink')

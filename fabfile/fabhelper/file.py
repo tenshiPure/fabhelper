@@ -1,4 +1,4 @@
-from fabric.api import sudo
+from fabric.api import run, sudo
 
 from result import ok
 
@@ -31,3 +31,9 @@ def __backup(path):
 
 def __diff(path):
 	ok('diff %s %s.origin; true' % (path, path))
+
+
+def link(src, dst):
+	run('ln --symbolic --force %s %s' % (src, dst))
+	ok('ls -l %s' % dst)
+	ok('ls -l %s' % src)
