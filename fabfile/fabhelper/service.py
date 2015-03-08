@@ -23,7 +23,8 @@ def __stop(service):
 
 def __isRunning(service):
 	with hide('everything'):
-		return 'running' in sudo('service %s status; true' % service)
+		status = sudo('service %s status; true' % service)
+		return 'running' in status or 'enabled' in status
 
 
 def off(target):
