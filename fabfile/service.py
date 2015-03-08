@@ -43,8 +43,20 @@ def restart_services():
 
 
 @task
+def reload_service():
+	service.reload('sshd')
+
+
+@task
+def reload_services():
+	service.reload(['sshd', 'sshd'])
+
+
+@task
 def all():
 	to_disabled_service()
 	to_disabled_services()
 	restart_service()
 	restart_services()
+	reload_service()
+	reload_services()

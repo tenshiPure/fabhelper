@@ -53,3 +53,11 @@ def __restart(service):
 		sudo('service %s restart' % service)
 	else:
 		sudo('service %s start' % service)
+
+
+def reload(target):
+	[__reload(service) for service in toList(target)]
+
+
+def __reload(service):
+	sudo('service %s reload' % service)
