@@ -42,3 +42,14 @@ def __off(service):
 def __isOn(service):
 	with hide('everything'):
 		return '3:on' in sudo('chkconfig --list %s; true' % service)
+
+
+def restart(target):
+	[__restart(service) for service in toList(target)]
+
+
+def __restart(service):
+	if __isRunning(service):
+		sudo('service %s restart' % service)
+	else:
+		sudo('service %s start' % service)

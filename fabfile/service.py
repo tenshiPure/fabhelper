@@ -30,3 +30,13 @@ def off_service():
 @task
 def off_services():
 	service.off(['postfix', 'crond'])
+
+
+@task
+def restart_service():
+	service.restart('crond')
+
+
+@task
+def restart_services():
+	service.restart(['crond', 'crond'])
