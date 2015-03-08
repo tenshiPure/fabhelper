@@ -1,6 +1,6 @@
 from fabric.api import sudo, hide
 
-from result import ok
+from result import done, already
 from util import toList
 
 def to_disabled(target):
@@ -16,9 +16,9 @@ def __stop(service):
 	if __isRunning(service):
 		with hide('everything'):
 			sudo('service %s stop' % service)
-		ok('echo stop %s' % service)
+		done("echo 'stopped         : %s'" % service)
 	else:
-		ok('echo %s is already stopped' % service)
+		already("echo 'already stopped : %s'" % service)
 
 
 def __isRunning(service):
@@ -34,9 +34,9 @@ def __off(service):
 	if __isOn(service):
 		with hide('everything'):
 			sudo('chkconfig %s off' % service)
-		ok('echo turn off %s' % service)
+		done("echo 'turn off        : %s'" % service)
 	else:
-		ok('echo %s is already off' % service)
+		already("echo 'already off     : %s'" % service)
 
 
 def __isOn(service):

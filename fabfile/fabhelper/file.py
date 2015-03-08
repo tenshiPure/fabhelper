@@ -1,6 +1,6 @@
 from fabric.api import run, sudo, hide
 
-from result import ok
+from result import done, already
 
 def sed(path, src, dst, e = False):
 	option = ['-i', '-ie'][e]
@@ -25,9 +25,9 @@ def __backup(path):
 	if __isNoBackup(path):
 		with hide('everything'):
 			sudo('cp -p %s %s.origin' % (path, path))
-		ok('echo create backup : %s.origin' % path)
+		done("echo 'create backup  : %s.origin'" % path)
 	else:
-		ok('echo %s.origin is already exists' % path)
+		already("echo 'already exists : %s'" % path)
 
 
 def __isNoBackup(path):
@@ -36,10 +36,10 @@ def __isNoBackup(path):
 
 
 def __diff(path):
-	ok('diff %s %s.origin; true' % (path, path))
+	done("echo 'diff'; diff %s %s.origin; true" % (path, path))
 
 
 def link(src, dst):
 	run('ln --symbolic --force %s %s' % (src, dst))
-	ok('ls -l %s' % dst)
-	ok('ls -l %s' % src)
+	done("echo -n 'link   : '; ls -l %s" % dst)
+	done("echo -n 'origin : '; ls -l %s" % src)

@@ -1,6 +1,12 @@
+from fabric.api import sudo
 from fabric.decorators import task
 
 from fabhelper import file
+
+@task
+def prepare():
+	sudo("echo -e 'hoge\nfuga\n#hoge' > /tmp/sample.txt")
+
 
 @task
 def sed():

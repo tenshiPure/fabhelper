@@ -1,6 +1,6 @@
 from fabric.api import sudo, hide
 
-from result import ok
+from result import done, already
 from util import toList
 
 def install(target, repositories = None):
@@ -11,9 +11,9 @@ def __install(package, repositories):
 	if __isNotInstalled(package):
 		with hide('stdout'):
 			sudo('yum install -y %s%s' % (__enablerepos(repositories), package))
-		ok('echo %s' % __version(package))
+		done("echo 'install complete  : %s'" % __version(package))
 	else:
-		ok('echo %s is already installed' % __version(package))
+		already("echo 'already installed : %s'" % __version(package))
 
 
 def __isNotInstalled(package):
@@ -51,9 +51,9 @@ def __addRepository(name, url):
 	if __doesNotHasRepository(package):
 		with hide('everything'):
 			sudo('rpm -iv %s' % url)
-		ok('echo install complete : %s' % __repository(name))
+		done("echo 'install complete  : %s'" % __repository(name))
 	else:
-		ok('echo %s is already installed' % package)
+		already("echo 'already installed : %s'" % package)
 
 
 def __doesNotHasRepository(package):

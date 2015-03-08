@@ -1,12 +1,16 @@
 from fabric.api import sudo, hide
-from fabric.colors import green, red
+from fabric.colors import green, red, cyan
 
-def ok(command):
+def done(command):
 	__print(green, command)
 
 
-def ng(command):
+def error(command):
 	__print(red, command)
+
+
+def already(command):
+	__print(cyan, command)
 
 
 def __print(color, command):
