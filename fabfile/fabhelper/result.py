@@ -1,4 +1,4 @@
-from fabric.api import run, hide
+from fabric.api import sudo, hide
 from fabric.colors import green, red
 
 def ok(command):
@@ -11,4 +11,4 @@ def ng(command):
 
 def __print(color, command):
 	with hide('everything'):
-		print color(run(command))
+		print color(sudo(command))

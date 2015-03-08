@@ -1,4 +1,4 @@
-from fabric.api import run, sudo
+from fabric.api import run, sudo, hide
 
 from result import ok
 
@@ -22,11 +22,17 @@ def conf(func):
 
 
 def __backup(path):
-	if 'No such file or directory' in sudo('ls %s.origin; true' % path):
-		sudo('cp -p %s %s.origin' % (path, path))
+	if __isNoBackup(path):
+		with hide('everything'):
+			sudo('cp -p %s %s.origin' % (path, path))
 		ok('echo create backup : %s.origin' % path)
 	else:
 		ok('echo %s.origin is already exists' % path)
+
+
+def __isNoBackup(path):
+	with hide('everything'):
+		return 'No such file or directory' in sudo('ls %s.origin; true' % path)
 
 
 def __diff(path):
