@@ -3,6 +3,11 @@ from fabric.decorators import task
 from fabhelper import yum
 
 @task
+def update():
+	yum.update()
+
+
+@task
 def install_package():
 	yum.install('wget')
 
@@ -74,6 +79,7 @@ def all_install_with_repositories():
 
 @task
 def all():
+	update()
 	all_install()
 	all_repositories()
 	all_install_with_repositories()

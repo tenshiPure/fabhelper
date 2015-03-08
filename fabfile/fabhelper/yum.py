@@ -3,6 +3,11 @@ from fabric.api import sudo, hide
 from result import done, already
 from util import toList
 
+def update():
+	with hide('stdout'):
+		sudo('yum update -y')
+
+
 def install(target, repositories = None):
 	[__install(package, repositories) for package in toList(target)]
 
