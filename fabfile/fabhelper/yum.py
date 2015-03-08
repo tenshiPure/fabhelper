@@ -2,20 +2,20 @@ from fabric.api import sudo, hide
 
 from result import ok
 
-def install(target):
+def install(target, repositories = None):
 	if type(target) is str:
-		__install(target)
+		__install(target, repositories)
 	else:
-		[__install(package) for package in target]
+		[__install(package, repositories) for package in target]
 
 
-def __install(package):
+def __install(package, repositories):
 	if __isNotInstalled(package):
 		with hide('stdout'):
-			sudo('yum install -y %s' % package)
+			sudo('yum install -y %s %s' % (__enablerepos(repositories), package))
 		ok('echo %s' % __version(package))
 	else:
-		ok('echo %s is already installed' % package)
+		ok('echo %s is already installed' % __version(package))
 
 
 def __isNotInstalled(package):
@@ -25,6 +25,13 @@ def __isNotInstalled(package):
 def __version(package):
 	with hide('everything'):
 		return sudo('rpm -q %s; true' % package)
+
+
+def __enablerepos(repositories):
+	if repositories is None:
+		return ''
+	else:
+		return '--enablerepo=%s ' * len(repositories) % tuple(repositories)
 
 
 def addEpel():
