@@ -40,3 +40,11 @@ def restart_service():
 @task
 def restart_services():
 	service.restart(['crond', 'crond'])
+
+
+@task
+def all():
+	to_disabled_service()
+	to_disabled_services()
+	restart_service()
+	restart_services()

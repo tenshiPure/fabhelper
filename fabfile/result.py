@@ -12,3 +12,9 @@ def ok():
 def ng():
 	result.ng('uname -a')
 	result.ng('echo some string')
+
+
+@task
+def all():
+	ok()
+	ng()
