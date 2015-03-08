@@ -14,12 +14,12 @@ def to_disabled_services():
 
 @task
 def stop_service():
-	service.stop('httpd')
+	service.stop('postfix')
 
 
 @task
 def stop_services():
-	service.stop(['postfix', 'httpd'])
+	service.stop(['postfix', 'crond'])
 
 
 @task
@@ -30,6 +30,36 @@ def off_service():
 @task
 def off_services():
 	service.off(['postfix', 'crond'])
+
+
+@task
+def to_enabled_service():
+	service.to_enabled('postfix')
+
+
+@task
+def to_enabled_services():
+	service.to_enabled(['postfix', 'crond'])
+
+
+@task
+def start_service():
+	service.start('postfix')
+
+
+@task
+def start_services():
+	service.start(['postfix', 'crond'])
+
+
+@task
+def on_service():
+	service.on('postfix')
+
+
+@task
+def on_services():
+	service.on(['postfix', 'crond'])
 
 
 @task
@@ -56,6 +86,8 @@ def reload_services():
 def all():
 	to_disabled_service()
 	to_disabled_services()
+	to_enabled_service()
+	to_enabled_services()
 	restart_service()
 	restart_services()
 	reload_service()
