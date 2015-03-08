@@ -29,4 +29,23 @@ def addRpmForge():
 
 @task
 def install_package_with_repository():
+	yum.addRemi()
+	yum.install('php', 'remi')
+
+
+@task
+def install_package_with_repositories():
+	yum.addRemi()
 	yum.install('php', ['remi', 'remi-php55'])
+
+
+@task
+def install_packages_with_repository():
+	yum.addRemi()
+	yum.install(['php', 'mysql-server'], 'remi')
+
+
+@task
+def install_packages_with_repositories():
+	yum.addRemi()
+	yum.install(['php', 'mysql-server'], ['remi', 'remi-php55'])

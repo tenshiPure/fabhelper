@@ -1,21 +1,15 @@
 from fabric.api import sudo, hide
 
 from result import ok
+from util import toList
 
 def to_disabled(target):
-	if type(target) is str:
-		__stop(target)
-		__off(target)
-	else:
-		[__stop(service) for service in target]
-		[__off(service) for service in target]
+	stop(target)
+	off(target)
 
 
 def stop(target):
-	if type(target) is str:
-		__stop(target)
-	else:
-		[__stop(service) for service in target]
+	[__stop(service) for service in toList(target)]
 
 
 def __stop(service):
@@ -33,10 +27,7 @@ def __isRunning(service):
 
 
 def off(target):
-	if type(target) is str:
-		__off(target)
-	else:
-		[__off(service) for service in target]
+	[__off(service) for service in toList(target)]
 
 
 def __off(service):
