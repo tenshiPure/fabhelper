@@ -10,3 +10,9 @@ def now():
 @task
 def now_with_format():
 	print date.now('%Y%m%d')
+
+
+@task
+def all():
+	now()
+	now_with_format()

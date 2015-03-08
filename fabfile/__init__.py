@@ -11,3 +11,15 @@ import file
 import date
 import git
 import cron
+
+from fabric.decorators import task
+
+@task
+def all():
+	result.all()
+	yum.all()
+	service.all()
+	file.all()
+	date.all()
+	git.all()
+	cron.all()

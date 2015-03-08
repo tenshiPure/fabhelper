@@ -35,3 +35,10 @@ def __sed_with_conf(path):
 def link():
 	file.link('/tmp/sample.txt', '/tmp/sample.txtlink')
 	file.link('/invalid/path', '/tmp/sample.txtlink')
+
+
+@task
+def all():
+	prepare()
+	conf()
+	link()
