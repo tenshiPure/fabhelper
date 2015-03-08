@@ -22,6 +22,7 @@ def sed_e():
 @task
 def conf():
 	__sed_with_conf('/tmp/sample.txt')
+	__sed_with_conf('/invalid/path')
 
 
 @file.conf
@@ -33,3 +34,4 @@ def __sed_with_conf(path):
 @task
 def link():
 	file.link('/tmp/sample.txt', '/tmp/sample.txtlink')
+	file.link('/invalid/path', '/tmp/sample.txtlink')
