@@ -11,6 +11,7 @@ import file
 import date
 import git
 import cron
+import log
 
 from fabric.decorators import task
 
@@ -23,3 +24,4 @@ def all():
 	date.all()
 	git.all()
 	cron.all()
+	log.all()
