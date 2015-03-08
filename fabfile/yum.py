@@ -10,3 +10,18 @@ def install_package():
 @task
 def install_packages():
 	yum.install(['wget', 'tree'])
+
+
+@task
+def addEpel():
+	yum.addEpel()
+
+
+@task
+def addRemi():
+	yum.addRemi()
+
+
+@task
+def addRpmForge():
+	yum.addRpmForge()
