@@ -1,11 +1,18 @@
 from fabric.api import sudo, hide
 
 from result import done, already
+from service import to_enabled
 from util import toList
 
 def update():
 	with hide('stdout'):
 		sudo('yum update -y')
+	done('echo complete : yum update')
+
+
+def cron():
+	install('yum-cron')
+	to_enabled('yum-cron')
 
 
 def install(target, repositories = None):

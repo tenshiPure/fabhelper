@@ -8,6 +8,11 @@ def update():
 
 
 @task
+def cron():
+	yum.cron()
+
+
+@task
 def install_package():
 	yum.install('wget')
 
@@ -80,6 +85,7 @@ def all_install_with_repositories():
 @task
 def all():
 	update()
+	cron()
 	all_install()
 	all_repositories()
 	all_install_with_repositories()
