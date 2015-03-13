@@ -13,7 +13,7 @@ fabricでのインストールや設定変更、デプロイの冪等性保証�
 
 ## 作成背景
 fabricを使う場面が多く、処理の重複が多かったため  
-車輪の再発明が好きなんだからしょうがないじゃん
+車輪の再発明好きなんだからしょうがないじゃん
 
 ## ディレクトリ構成
 ```Bash
@@ -113,4 +113,29 @@ yum操作に関するUtil集
 + インストール
 + リポジトリ指定インストール
 + アップデート
-+ yum-cronのインストールと有効化
++ yum-cronの設定
+
+## サンプル
+### サンプルコード
+```Python
+@task
+def sample():
+	yum.install(['wget', 'tree', 'unzip', 'httpd'])
+	service.to_enabled(['postfix', 'httpd'])
+
+	yum.addRemi()
+	yum.install('php', ['remi', 'remi-php55'])
+
+	__sample_httpd_conf('/etc/httpd/conf/httpd.conf')
+	service.restart('httpd')
+
+
+@file.conf
+def __sample_httpd_conf(path):
+	file.sed(path, 'ServerTokens OS', 'ServerTokens Prod/')
+	file.sed(path, 'ScriptAlias /cgi-bin/ "/var/www/cgi-bin/"', '#ScriptAlias')
+	file.sed(path, 'ServerSignature On', 'ServerSignature Off')
+```
+
+### 結果
+[sample-capture.png](https://github.com/tenshiPure/fabhelper/blob/master/sample-capture.png)
