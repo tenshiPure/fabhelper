@@ -1,5 +1,4 @@
 from fabric.api import sudo, hide, env
-from fabric.colors import green, red, cyan
 
 from fabric import colors
 
