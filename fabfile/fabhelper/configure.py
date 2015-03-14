@@ -9,9 +9,7 @@ git = _AttributeDict({
 from fabric import colors
 
 result = _AttributeDict({
-	'result' : {
-		'done'    : colors.green,
-		'error'   : colors.red,
-		'already' : colors.cyan
-	}
+	'done'    : colors.green,
+	'error'   : colors.red,
+	'already' : colors.cyan
 })

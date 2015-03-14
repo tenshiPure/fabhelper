@@ -1,6 +1,7 @@
 from fabric.decorators import task
+from fabric import colors
 
-from fabhelper import result
+from fabhelper import result, configure
 
 @task
 def done():
@@ -18,21 +19,15 @@ def already():
 
 
 @task
-def done_change_color_specify_with_argument():
-	result.done("echo 'done    : specify with argument'", color = result.blue)
+def change_color():
+	configure.result.done = colors.blue
+	result.done("echo 'done    : change configure'")
+	configure.result.done = colors.green
 
-
-@task
-def done_change_color_specify_setter():
-	result.set_color_done(result.magenta)
-	result.done("echo 'done    : specify with setter'")
-	result.reset_color_all()
-
-	result.done("echo 'done    : default color'")
 
 @task
 def bold():
-	result.done("echo 'done    : bold'", color = result.yellow, bold = True)
+	result.done("echo 'done    : bold'", bold = True)
 
 
 @task
@@ -41,8 +36,6 @@ def all():
 	error()
 	already()
 
-	done_change_color_specify_with_argument()
-
-	done_change_color_specify_setter()
+	change_color()
 
 	bold()
