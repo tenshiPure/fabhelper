@@ -2,7 +2,7 @@ from fabric.api import sudo, hide
 
 from result import done, already
 from service import to_enabled
-from util import toList
+from util import iterate
 
 def update():
 	with hide('stdout'):
@@ -16,7 +16,7 @@ def cron():
 
 
 def install(target, repositories = None):
-	[__install(package, repositories) for package in toList(target)]
+	[__install(package, repositories) for package in iterate(target)]
 
 
 def __install(package, repositories):
@@ -41,7 +41,7 @@ def __enablerepos(repositories):
 	if repositories is None:
 		return ''
 	else:
-		repositories = toList(repositories)
+		repositories = iterate(repositories)
 		return '--enablerepo=%s ' * len(repositories) % tuple(repositories)
 
 

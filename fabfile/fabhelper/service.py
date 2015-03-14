@@ -1,7 +1,7 @@
 from fabric.api import sudo, hide
 
 from result import done, already
-from util import toList
+from util import iterate
 
 def to_disabled(target):
 	stop(target)
@@ -9,7 +9,7 @@ def to_disabled(target):
 
 
 def stop(target):
-	[__stop(service) for service in toList(target)]
+	[__stop(service) for service in iterate(target)]
 
 
 def __stop(service):
@@ -28,7 +28,7 @@ def __isRunning(service):
 
 
 def off(target):
-	[__off(service) for service in toList(target)]
+	[__off(service) for service in iterate(target)]
 
 
 def __off(service):
@@ -51,7 +51,7 @@ def to_enabled(target):
 
 
 def start(target):
-	[__start(service) for service in toList(target)]
+	[__start(service) for service in iterate(target)]
 
 
 def __start(service):
@@ -64,7 +64,7 @@ def __start(service):
 
 
 def on(target):
-	[__on(service) for service in toList(target)]
+	[__on(service) for service in iterate(target)]
 
 
 def __on(service):
@@ -77,7 +77,7 @@ def __on(service):
 
 
 def restart(target):
-	[__restart(service) for service in toList(target)]
+	[__restart(service) for service in iterate(target)]
 
 
 def __restart(service):
@@ -88,7 +88,7 @@ def __restart(service):
 
 
 def reload(target):
-	[__reload(service) for service in toList(target)]
+	[__reload(service) for service in iterate(target)]
 
 
 def __reload(service):
