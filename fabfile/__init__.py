@@ -1,19 +1,16 @@
-from fabric.api import env
+from fabric.decorators import task
 
-env.hosts = ['192.168.100.10']
-env.user = 'vagrant'
-env.password = 'vagrant'
+from fabhelper.configure import set_ssh_env
+set_ssh_env('sample_vagrant')
 
 import result
-#import yum
-#import service
-#import file
-#import date
-#import git
-#import cron
-#import log
-
-from fabric.decorators import task
+import yum
+import service
+import file
+import date
+import git
+import cron
+import log
 
 @task
 def all():
@@ -25,6 +22,3 @@ def all():
 	git.all()
 	cron.all()
 	log.all()
-
-
-from fabhelper import configure

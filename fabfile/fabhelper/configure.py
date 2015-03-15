@@ -16,8 +16,9 @@ else:
 	import default_configure as current_conf
 	which = 'default configure.py'
 
-git = current_conf.git
+ssh = current_conf.ssh
 result = current_conf.result
+git = current_conf.git
 
 @task
 def generate():
@@ -38,8 +39,16 @@ def generate():
 def check():
 	print '\n%s is loaded.' % which
 
-	print '\ngit configure'
-	print git
+	print '\nssh configure'
+	print ssh
 
 	print '\nresult configure'
 	print result
+
+	print '\ngit configure'
+	print git
+
+
+def set_ssh_env(key):
+	from fabric.api import env
+	env.update(ssh[key])
