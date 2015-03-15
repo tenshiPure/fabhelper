@@ -5,13 +5,13 @@ env.user = 'vagrant'
 env.password = 'vagrant'
 
 import result
-import yum
-import service
-import file
-import date
-import git
-import cron
-import log
+#import yum
+#import service
+#import file
+#import date
+#import git
+#import cron
+#import log
 
 from fabric.decorators import task
 
@@ -25,3 +25,6 @@ def all():
 	git.all()
 	cron.all()
 	log.all()
+
+
+from fabhelper import configure
