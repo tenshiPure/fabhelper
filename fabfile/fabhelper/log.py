@@ -1,4 +1,6 @@
-from fabric.api import run, hide
+from fabric.api import hide
+
+from util import execute
 
 from result import done, error
 from date import now
@@ -6,13 +8,13 @@ from file import isExists
 
 def write_success(directory, file, format, line):
 	path = '%s/%s.success.%s' % (directory, file, now(format))
-	run('echo %s >> %s' % (line, path))
+	execute('echo %s >> %s' % (line, path))
 	done("echo 'write success log : %s >> %s'" % (line, path))
 
 
 def write_error(directory, file, format, line):
 	path = '%s/%s.error.%s' % (directory, file, now(format))
-	run('echo %s >> %s' % (line, path))
+	execute('echo %s >> %s' % (line, path))
 	error("echo 'write error log   : %s >> %s'" % (line, path))
 
 
@@ -34,4 +36,4 @@ def read_error(directory, file, date):
 
 def __read(path):
 	with hide('everything'):
-		return run('cat %s' % path)
+		return execute('cat %s' % path)

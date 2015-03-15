@@ -1,4 +1,6 @@
-from fabric.api import sudo, hide
+from fabric.api import hide
+
+from util import execute
 
 from result import done, already
 from service import to_enabled
@@ -6,7 +8,7 @@ from util import iterate
 
 def update():
 	with hide('stdout'):
-		sudo('yum update -y')
+		execute('yum update -y')
 	done('echo complete : yum update')
 
 
@@ -22,7 +24,7 @@ def install(target, repositories = None):
 def __install(package, repositories):
 	if __isNotInstalled(package):
 		with hide('stdout'):
-			sudo('yum install -y %s%s' % (__enablerepos(repositories), package))
+			execute('yum install -y %s%s' % (__enablerepos(repositories), package))
 		done("echo 'install complete  : %s'" % __version(package))
 	else:
 		already("echo 'already installed : %s'" % __version(package))
@@ -34,7 +36,7 @@ def __isNotInstalled(package):
 
 def __version(package):
 	with hide('everything'):
-		return sudo('rpm -q %s; true' % package)
+		return execute('rpm -q %s; true' % package)
 
 
 def __enablerepos(repositories):
@@ -62,7 +64,7 @@ def __addRepository(name, url):
 
 	if __doesNotHasRepository(package):
 		with hide('everything'):
-			sudo('rpm -iv %s' % url)
+			execute('rpm -iv %s' % url)
 		done("echo 'install complete  : %s'" % __repository(name))
 	else:
 		already("echo 'already installed : %s'" % package)
@@ -74,4 +76,4 @@ def __doesNotHasRepository(package):
 
 def __repository(name):
 	with hide('everything'):
-		return sudo('rpm -qa | grep %s-release; true' % name)
+		return execute('rpm -qa | grep %s-release; true' % name)

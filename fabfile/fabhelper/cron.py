@@ -1,6 +1,7 @@
 import os.path
 
-from fabric.api import sudo, put, hide
+from util import execute
+from fabric.api import put, hide
 
 from result import done, error
 from file import isExists, isExistsLine
@@ -18,19 +19,19 @@ def echo_to_directory(user, directory, shell_line, shell_name):
 	if isExists(path):
 		error('echo already exists : %s' % path)
 	else:
-		sudo("echo '%s' > %s" % (shell_line, path))
+		execute("echo '%s' > %s" % (shell_line, path))
 		__chmod(path)
 		__chown(user, path)
 		done("echo -n 'create shell : '; ls -l %s" % path)
 
 
-def put_to_directory(user, directory, shell):
+def put_to_directory(user, directory, shell, sudo = False):
 	path = '%s/%s' % (directory, os.path.basename(shell))
 
 	if isExists(path):
 		error('echo already exists : %s' % path)
 	else:
-		put(shell, directory,  use_sudo = True)
+		put(shell, directory,  use_sudo = sudo)
 		__chmod(path)
 		__chown(user, path)
 		done("echo -n 'send shell   : '; ls -l %s" % path)
@@ -41,14 +42,14 @@ def echo_to_spool(user, line):
 	if isExistsLine(path, line):
 		error('echo already exists : %s in %s' % (line, path))
 	else:
-		sudo("echo '%s' >> %s" % (line, path))
+		execute("echo '%s' >> %s" % (line, path))
 		__chown(user, path)
 		done("echo -n 'create shell : '; ls -l %s" % path)
 
 
 def __chmod(path):
-	sudo('chmod 755 %s' % path)
+	execute('chmod 755 %s' % path)
 
 
 def __chown(user, path):
-	sudo('chown %s:%s %s' % (user, user, path))
+	execute('chown %s:%s %s' % (user, user, path))

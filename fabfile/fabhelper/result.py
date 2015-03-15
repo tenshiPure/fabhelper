@@ -1,5 +1,6 @@
-from fabric.api import sudo, hide
+from fabric.api import hide
 
+from util import execute
 from configure import result
 
 def done(command, bold = False):
@@ -19,4 +20,4 @@ def already(command, bold = False):
 
 def __print(color, bold, command):
 	with hide('everything'):
-		print color(sudo(command), bold)
+		print color(execute(command), bold)

@@ -1,4 +1,6 @@
-from fabric.api import sudo, hide
+from fabric.api import hide
+
+from util import execute
 
 from result import done, already
 from util import iterate
@@ -15,7 +17,7 @@ def stop(target):
 def __stop(service):
 	if __isRunning(service):
 		with hide('everything'):
-			sudo('service %s stop' % service)
+			execute('service %s stop' % service)
 		done("echo 'stopped         : %s'" % service)
 	else:
 		already("echo 'already stopped : %s'" % service)
@@ -23,7 +25,7 @@ def __stop(service):
 
 def __isRunning(service):
 	with hide('everything'):
-		status = sudo('service %s status; true' % service)
+		status = execute('service %s status; true' % service)
 		return 'running' in status or 'enabled' in status
 
 
@@ -34,7 +36,7 @@ def off(target):
 def __off(service):
 	if __isOn(service):
 		with hide('everything'):
-			sudo('chkconfig %s off' % service)
+			execute('chkconfig %s off' % service)
 		done("echo 'turn off        : %s'" % service)
 	else:
 		already("echo 'already off     : %s'" % service)
@@ -42,7 +44,7 @@ def __off(service):
 
 def __isOn(service):
 	with hide('everything'):
-		return '3:on' in sudo('chkconfig --list %s; true' % service)
+		return '3:on' in execute('chkconfig --list %s; true' % service)
 
 
 def to_enabled(target):
@@ -59,7 +61,7 @@ def __start(service):
 		already("echo 'already started : %s'" % service)
 	else:
 		with hide('everything'):
-			sudo('service %s start' % service)
+			execute('service %s start' % service)
 		done("echo 'started         : %s'" % service)
 
 
@@ -72,7 +74,7 @@ def __on(service):
 		already("echo 'already on      : %s'" % service)
 	else:
 		with hide('everything'):
-			sudo('chkconfig %s off' % service)
+			execute('chkconfig %s off' % service)
 		done("echo 'turn on         : %s'" % service)
 
 
@@ -82,9 +84,9 @@ def restart(target):
 
 def __restart(service):
 	if __isRunning(service):
-		sudo('service %s restart' % service)
+		execute('service %s restart' % service)
 	else:
-		sudo('service %s start' % service)
+		execute('service %s start' % service)
 
 
 def reload(target):
@@ -92,4 +94,4 @@ def reload(target):
 
 
 def __reload(service):
-	sudo('service %s reload' % service)
+	execute('service %s reload' % service)

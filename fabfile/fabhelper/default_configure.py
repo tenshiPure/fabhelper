@@ -1,5 +1,11 @@
 from fabric.utils import _AttributeDict
 
+from fabric.api import run
+
+execute = _AttributeDict({
+	'func' : run
+})
+
 ssh = _AttributeDict({
 	'server_name' : {
 		'hosts'    : '',

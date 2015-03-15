@@ -9,6 +9,11 @@ def iterate(target):
 		raise Exception('invalid argument. string, tuple, list are allowed.')
 
 
+def execute(command):
+	from configure import execute
+	return execute.func(command)
+
+
 # temporary test
 if __name__ == '__main__':
 	s1 = 'wget'

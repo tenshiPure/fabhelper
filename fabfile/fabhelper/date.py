@@ -1,5 +1,7 @@
-from fabric.api import run, hide
+from fabric.api import hide
+
+from util import execute
 
 def now(format = '%F_%T'):
 	with hide('everything'):
-		return run('date +%s' % format)
+		return execute('date +%s' % format)

@@ -16,6 +16,7 @@ else:
 	import default_configure as current_conf
 	which = 'default configure.py'
 
+execute = current_conf.execute
 ssh = current_conf.ssh
 result = current_conf.result
 git = current_conf.git
@@ -39,6 +40,9 @@ def generate():
 def check():
 	print '\n%s is loaded.' % which
 
+	print '\nexecute configure'
+	print execute
+
 	print '\nssh configure'
 	print ssh
 
@@ -52,3 +56,13 @@ def check():
 def set_ssh_env(key):
 	from fabric.api import env
 	env.update(ssh[key])
+
+
+def set_execute_mode_run():
+	from fabric.api import run
+	execute.func = run
+
+
+def set_execute_mode_sudo():
+	from fabric.api import sudo
+	execute.func = sudo
