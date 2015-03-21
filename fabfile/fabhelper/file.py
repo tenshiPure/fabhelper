@@ -2,9 +2,13 @@ from fabric.api import hide
 
 from util import execute
 
-from result import done, already, error
+from result import done, error, already
 
 def sed(path, src, dst, e = False):
+	if not isExists(path):
+		error('echo not exists : %s' % path)
+		return
+
 	option = ['-i', '-ie'][e]
 
 	execute("sed %s 's/%s/%s/' %s" % (option, __escape(src), __escape(dst), path))

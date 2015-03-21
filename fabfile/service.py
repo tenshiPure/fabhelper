@@ -39,7 +39,7 @@ def to_enabled_service():
 
 @task
 def to_enabled_services():
-	service.to_enabled(['postfix', 'crond'])
+	service.to_enabled(['postfix', 'crond', 'invalid'])
 
 
 @task

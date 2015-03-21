@@ -2,7 +2,7 @@ from fabric.api import hide
 
 from util import execute
 
-from result import done, already
+from result import done, error, already
 from service import to_enabled
 from util import iterate
 
@@ -24,8 +24,11 @@ def install(target, repositories = None):
 def __install(package, repositories):
 	if __isNotInstalled(package):
 		with hide('stdout'):
-			execute('yum install -y %s%s' % (__enablerepos(repositories), package))
-		done("echo 'install complete  : %s'" % __version(package))
+			stdout = execute('yum install -y %s%s; true' % (__enablerepos(repositories), package))
+			if 'Error: Nothing to do' in stdout:
+				error("echo 'install error     : No package %s available.'" % package)
+			else:
+				done("echo 'install complete  : %s'" % __version(package))
 	else:
 		already("echo 'already installed : %s'" % __version(package))
 

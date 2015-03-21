@@ -19,7 +19,7 @@ def install_package():
 
 @task
 def install_packages():
-	yum.install(['wget', 'tree'])
+	yum.install(['wget', 'tree', 'invalid'])
 
 
 @task

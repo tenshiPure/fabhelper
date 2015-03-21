@@ -2,7 +2,7 @@ from fabric.api import hide
 
 from util import execute
 
-from result import done, already
+from result import done, error, already
 from util import iterate
 
 def to_disabled(target):
@@ -61,8 +61,11 @@ def __start(service):
 		already("echo 'already started : %s'" % service)
 	else:
 		with hide('everything'):
-			execute('service %s start' % service)
-		done("echo 'started         : %s'" % service)
+			stdout = execute('service %s start; true' % service)
+			if 'unrecognized' in stdout:
+				error("echo 'start error     : %s is unrecognized'" % service)
+			else:
+				done("echo 'started         : %s'" % service)
 
 
 def on(target):
@@ -74,8 +77,11 @@ def __on(service):
 		already("echo 'already on      : %s'" % service)
 	else:
 		with hide('everything'):
-			execute('chkconfig %s off' % service)
-		done("echo 'turn on         : %s'" % service)
+			stdout = execute('chkconfig %s on; true' % service)
+			if 'No such file or directory' in stdout:
+				error("echo 'turn on error   : %s is unrecognized'" % service)
+			else:
+				done("echo 'turn on         : %s'" % service)
 
 
 def restart(target):
@@ -84,9 +90,9 @@ def restart(target):
 
 def __restart(service):
 	if __isRunning(service):
-		execute('service %s restart' % service)
+		stdout = execute('service %s restart' % service)
 	else:
-		execute('service %s start' % service)
+		__start(service)
 
 
 def reload(target):
@@ -94,4 +100,6 @@ def reload(target):
 
 
 def __reload(service):
-	execute('service %s reload' % service)
+	stdout = execute('service %s reload; true' % service)
+	if 'unrecognized' in stdout:
+		error("echo 'reload error : %s is unrecognized'" % service)
