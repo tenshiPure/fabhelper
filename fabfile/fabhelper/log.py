@@ -3,37 +3,33 @@ from fabric.api import hide
 from util import execute
 
 from result import done, error
-from date import now
-from file import isExists
+from file import isExists, cat
 
-def write_success(directory, file, format, line):
-	path = '%s/%s.success.%s' % (directory, file, now(format))
+def write_success(path, line):
+	__write(path, line, done)
+
+
+def write_error(path, line):
+	__write(path, line, error)
+
+
+def __write(path, line, func):
 	execute('echo %s >> %s' % (line, path))
-	done("echo 'write success log : %s >> %s'" % (line, path))
+	func("echo 'write log   : %s >> %s'" % (line, path))
 
 
-def write_error(directory, file, format, line):
-	path = '%s/%s.error.%s' % (directory, file, now(format))
-	execute('echo %s >> %s' % (line, path))
-	error("echo 'write error log   : %s >> %s'" % (line, path))
+def read_success(path):
+	__read(path, done)
 
 
-def read_success(directory, file, date):
-	path = '%s/%s.success.%s' % (directory, file, date)
-	if isExists(path):
-		done("echo 'log lines         : %s'; echo '%s'" % (path, __read(path)))
-	else:
+def read_error(path):
+	__read(path, error)
+
+
+def __read(path, func):
+	try:
+		lines = cat(path)
+		func("echo 'log lines         : %s'; echo '%s'" % (path, lines))
+
+	except AssertionError as e:
 		error("echo 'no such file : %s'" % path)
-
-
-def read_error(directory, file, date):
-	path = '%s/%s.error.%s' % (directory, file, date)
-	if isExists(path):
-		error("echo 'log lines         : %s'; echo '%s'" % (path, __read(path)))
-	else:
-		error("echo 'no such file : %s'" % path)
-
-
-def __read(path):
-	with hide('everything'):
-		return execute('cat %s' % path)
