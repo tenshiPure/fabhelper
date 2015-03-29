@@ -1,11 +1,12 @@
-from fabric.api import sudo
+from fabric.api import run
 from fabric.decorators import task
 
 from fabhelper import file
 
 @task
 def prepare():
-	sudo("echo -e 'hoge\nfuga\n#hoge' > /tmp/sample.txt")
+	run("echo -e 'hoge\nfuga\n#hoge' > /tmp/sample.txt")
+	run("mkdir -p /tmp/samples; cd /tmp/samples; touch {1,2,3,4}{a,b,c,d}")
 
 
 @task
@@ -34,6 +35,7 @@ def __sed_with_conf(path):
 @task
 def link():
 	file.link('/tmp/sample.txt', '/tmp/sample.txtlink')
+	file.link('/tmp/samples', '/tmp/sampleslink')
 	file.link('/invalid/path', '/tmp/sample.txtlink')
 
 

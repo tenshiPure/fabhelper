@@ -51,13 +51,12 @@ def __diff(path):
 	done("echo 'diff'; diff %s %s.origin; true" % (path, path))
 
 
-def link(src, dst):
-	if not isExists(src):
-		error('echo not exists : %s' % src)
+def link(origin, link):
+	if not isExists(origin):
+		error('echo not exists : %s' % origin)
 	else:
-		execute('ln --symbolic --force %s %s' % (src, dst))
-		done("echo -n 'link   : '; ls -l %s" % dst)
-		done("echo -n 'origin : '; ls -l %s" % src)
+		execute('ln --symbolic --force %s %s' % (origin, link))
+		done("echo -n 'link   : '; ls -l %s" % link)
 
 
 def isExists(path):
@@ -68,3 +67,9 @@ def isExists(path):
 def isExistsLine(path, line):
 	with hide('everything'):
 		return line in execute('cat %s; true' % path)
+
+def cat(path):
+	assert isExists(path)
+
+	with hide('everything'):
+		return execute('cat %s' % path)
