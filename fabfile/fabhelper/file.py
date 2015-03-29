@@ -73,3 +73,13 @@ def cat(path):
 
 	with hide('everything'):
 		return execute('cat %s' % path)
+
+
+def cleanUp(path, upperLimit):
+	targets = __directoriesSortedByOlder(path)[:-upperLimit]
+	[execute('rm -rf %s/%s' % (path, target)) for target in targets]
+
+
+def __directoriesSortedByOlder(path):
+	with hide('everything'):
+		return execute('ls %s | sort' % path).split('\r\n')
